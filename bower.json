@@ -1,0 +1,23 @@
+{
+  "name": "go-workers-ui",
+  "version": "1.0.0",
+  "authors": [
+    "Duke <dukekhaos@gmail.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "handlebars": "~3.0.3",
+    "normalize.css": "~3.0.3",
+    "moment": "~2.10.3"
+  }
+}

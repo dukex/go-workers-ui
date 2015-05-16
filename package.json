@@ -1,0 +1,19 @@
+{
+  "name": "go-workers-ui",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "broccoli-handlebars": "0.0.6"
+  },
+  "devDependencies": {
+    "broccoli": "^0.16.2",
+    "broccoli-babel-transpiler": "^5.0.0",
+    "broccoli-merge-trees": "^0.2.1",
+    "broccoli-static-compiler": "^0.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Duke <dukekhaos@gmail.com>",
+  "license": "MIT"
+}
