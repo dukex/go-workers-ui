@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Workers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="deps/handlebars/handlebars.js"></script>
+    <script src="deps/moment/moment.js"></script>
+    <script src="app.js"></script>
+
+    <link rel="stylesheet" href="deps/normalize.css/normalize.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="app.css" media="screen" charset="utf-8">
+  </head>
+  <body>
+    <h1>Workers</h1>
+    <div id="processed">
+      <span class="value"></span>
+      <p>Processed</p>
+    </div>
+    <div id="failed">
+      <span class="value"></span>
+      <p>Failed</p>
+    </div>
+
+    <div id="jobs">
+      <h2>Jobs</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Queue</th>
+            <th>Class</th>
+            <th>Queued At</th>
+            <th>Started At</th>
+            <th>Args</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <script id="jobs-table-body-template" type="text/x-handlebars-template">
+      {{#each jobs}}
+        <tr>
+          <td>{{message.queue}}</td>
+          <td>{{message.class}}</td>
+          <td>{{message.enqueued_at}}</td>
+          <td>{{started_at}}</td>
+          <td>{{message.args}}</td>
+        </tr>
+      {{else}}
+        <tr>
+          <td class="nojobs" colspan="5">No jobs running</td>
+        </tr>
+      {{/each}}
+    </script>
+
+    <script type="text/javascript">
+      new GoWorkersUI("http://uhura-workers.herokuapp.com") // Change to your go-workers root url
+    </script>
+  <!-- livereload snippet -->
+<script>document.write('<script src="http://'
+ + (location.host || 'localhost').split(':')[0]
+ + ':35729/livereload.js?snipver=1"><\/script>')
+</script>
+</body>
+</html>

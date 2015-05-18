@@ -1,0 +1,74 @@
+body {
+  background: #F2F2F0;
+}
+
+h1 {
+  margin: 0;
+  position: relative;
+  background: #373737;
+  box-shadow: 0 1px 3px black;
+  color: #8F8F8F;
+  font-size: 20px;
+  padding: 20px 30px;
+}
+
+
+#processed, #failed {
+  width: 50%;
+  float: left;
+  color: #FFF;
+  text-align: center;
+  font-size: 50px;
+  padding: 50px 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#processed {
+  background: #70C67E
+}
+
+#failed {
+  background: #DE6164
+}
+
+#processed p, #failed p {
+  font-size: 15px;
+  margin: 0;
+}
+
+
+#jobs {
+  clear: both;
+}
+
+h2 {
+  background: #F7F6F2;
+  padding: 10px;
+  margin: 0;
+  border-bottom: 1px solid #CECCC0;
+}
+
+#queues {
+  list-style: none;
+  padding: 0 10px;
+  margin: 0;
+  border-top: 1px solid #FFF;
+}
+
+table {
+  width: 100%;
+  margin: 10px;
+}
+
+table th {
+  text-align: left;
+}
+
+table td{
+  padding: 10px 0;
+}
+
+table td.nojobs {
+  text-align: center
+}
