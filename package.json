@@ -9,10 +9,15 @@
     "broccoli": "^0.16.2",
     "broccoli-babel-transpiler": "^5.0.0",
     "broccoli-merge-trees": "^0.2.1",
-    "broccoli-static-compiler": "^0.2.1"
+    "broccoli-static-compiler": "^0.2.1",
+    "gh-pages-deploy": "^0.3.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "rm -Rf dist && broccoli build dist && gh-pages-deploy"
+  },
+  "gh-pages-deploy": {
+    "staticpath": "dist",
+    "noprompt": false
   },
   "author": "Duke <dukekhaos@gmail.com>",
   "license": "MIT"
