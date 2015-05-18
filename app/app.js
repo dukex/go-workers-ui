@@ -43,7 +43,8 @@ class GoWorkersUI {
           var data = JSON.parse(request.responseText);
           this.update(data);
         } else {
-          window.alert('There was a problem with the request.');
+          console.warn('There was a problem with the request.');
+          console.log(request)
         }
       }
     };
