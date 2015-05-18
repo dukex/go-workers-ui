@@ -17,7 +17,7 @@
   },
   "gh-pages-deploy": {
     "staticpath": "dist",
-    "noprompt": false
+    "noprompt": true
   },
   "author": "Duke <dukekhaos@gmail.com>",
   "license": "MIT"
