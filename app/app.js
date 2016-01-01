@@ -1,54 +1,60 @@
-class GoWorkersUI {
-  constructor(workerURL) {
-    this.rootURL = workerURL;
-    this.loop();
-  }
-
-  loop() {
-    this.stats();
-    window.setTimeout(() => {
-      this.loop();
-    }, 2000)
-  }
-
-  update(data) {
-    document.querySelector("#processed .value").innerHTML = data.processed;
-    document.querySelector("#failed .value").innerHTML = data.failed;
-    var jobs = this.__jobs(data);
-    document.querySelector("#jobs tbody").innerHTML = this.__templateJob({jobs: jobs});
-  }
-
-  __templateJob(data) {
-    var source   = document.querySelector("#jobs-table-body-template").innerHTML;
-    return Handlebars.compile(source)(data);
-  }
-
-  __jobs(data) {
-    var jobs = [];
-    for(var queueTitle in data.jobs) {
-      data.jobs[queueTitle].forEach(function (job) {
-        job.message.enqueued_at =  moment(new Date(job.message.enqueued_at * 1000)).fromNow();
-        job.started_at =  moment(new Date(job.started_at * 1000)).fromNow();
-        jobs.push(job);
-      });
-    }
-    return jobs;
-  }
-
-  stats() {
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = () => {
-      if (request.readyState === 4) {
-        if (request.status === 200) {
-          var data = JSON.parse(request.responseText);
-          this.update(data);
-        } else {
-          console.warn('There was a problem with the request.');
-          console.log(request)
-        }
+const stats = (state = {}, action) => {
+  console.log(action);
+  switch (action.type) {
+    case "UPDATE_DATA":
+      let jobs = [];
+      const data = action.data;
+      for(var queueTitle in action.data.jobs) {
+        data.jobs[queueTitle].forEach(function (job) {
+          job.message.enqueued_at =  moment(new Date(job.message.enqueued_at * 1000)).fromNow();
+          job.started_at =  moment(new Date(job.started_at * 1000)).fromNow();
+          jobs.push(job);
+        });
       }
-    };
-    request.open('GET', this.rootURL + "/stats");
-    request.send();
+      return Object.assign({}, action.data, { jobs: jobs });
+    default:
+      return state;
   }
+};
+
+const { createStore } = Redux;
+const store = createStore(stats);
+
+const render = () => {
+  const state = store.getState();
+  const source = document.querySelector("#jobs-table-body-template").innerHTML;
+  const compiled = Handlebars.compile(source)(state);
+  document.querySelector("#processed .value").innerHTML = state.processed;
+  document.querySelector("#failed .value").innerHTML = state.failed;
+  document.querySelector("#jobs tbody").innerHTML = compiled;
+};
+
+store.subscribe(render);
+render();
+
+const  updateStats = () => {
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      if (request.status === 200) {
+        var data = JSON.parse(request.responseText);
+        store.dispatch({
+          type: "UPDATE_DATA",
+          data
+        })
+      } else {
+        console.warn('There was a problem with the request.');
+        console.log(request)
+      }
+    }
+  };
+  request.open('GET', "http://uhura-workers.herokuapp.com/stats");
+  request.send();
 }
+
+const loop = () => {
+  updateStats();
+  window.setTimeout(loop, 2000);
+}
+
+loop();
